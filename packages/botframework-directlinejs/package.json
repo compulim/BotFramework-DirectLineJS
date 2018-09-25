@@ -1,0 +1,63 @@
+{
+  "name": "botframework-directlinejs",
+  "version": "0.9.18-0",
+  "description": "client library for the Microsoft Bot Framework Direct Line 3.0 protocol",
+  "files": [
+    "lib/**/*"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "private": true,
+  "scripts": {
+    "build": "concurrently --names \"babel,typecheck\" \"npm run build:babel\" \"npm run build:typecheck\"",
+    "build:babel": "babel --extensions .js,.ts,.tsx --ignore **/*.spec.js,**/*.spec.ts,**/*.spec.tsx,**/*.test.js,**/*.test.ts,**/*.test.tsx,__test__/**/*.js,__test__/**/*.ts,__test__/**/*.tsx --out-dir lib --source-maps inline --verbose src",
+    "build:typecheck": "tsc",
+    "clean": "npx rimraf lib",
+    "prepublishOnly": "npm run clean && npm run build && npm run webpack",
+    "test": "jest",
+    "watch": "concurrently --names \"babel,typecheck\" \"npm run build:babel -- --watch\" \"npm run build:typecheck -- --preserveWatchOutput --watch\"",
+    "webpack": "webpack --mode production",
+    "webpack-dev": "webpack --mode development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git@github.com/Microsoft/BotFramework-DirectLineJS.git"
+  },
+  "author": "Microsoft Corp",
+  "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)(spec|test).[jt]s?(x)"
+    ],
+    "transform": {
+      "^.+\\.[jt]sx?$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/runtime": "^7.0.0",
+    "rxjs": "^5.0.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/node": "^10.11.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "concurrently": "^4.0.1",
+    "jest": "^23.6.0",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-visualizer-plugin": "^0.1.11"
+  }
+}

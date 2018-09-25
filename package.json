@@ -1,31 +1,22 @@
 {
-  "name": "botframework-directlinejs",
-  "version": "0.9.18-0",
-  "description": "client library for the Microsoft Bot Framework Direct Line 3.0 protocol",
-  "main": "built/directLine.js",
-  "types": "built/directLine.d.ts",
+  "name": "botframework-directlinejs-root",
+  "version": "4.0.0-0",
+  "description": "",
+  "private": true,
   "scripts": {
-    "build": "tsc && webpack",
-    "watch": "npx npm-run-all -p -r -l tsc-watch webpack-watch",
-    "tsc-watch": "tsc -w",
-    "webpack-watch": "webpack -w",
-    "clean": "rm -rf built",
-    "prepublish": "tsc && webpack --config webpack.production.config.js",
-    "test": "echo TODO: Add tests"
+    "bootstrap": "lerna bootstrap"
   },
   "repository": {
     "type": "git",
-    "url": "git://git@github.com/Microsoft/BotFramework-DirectLineJS.git"
+    "url": "git+https://github.com/Microsoft/BotFramework-DirectLineJS.git"
   },
-  "author": "Microsoft Corp",
+  "author": "Microsoft Corporation",
   "license": "MIT",
-  "dependencies": {
-    "rxjs": "^5.0.3"
+  "bugs": {
+    "url": "https://github.com/Microsoft/BotFramework-DirectLineJS/issues"
   },
+  "homepage": "https://github.com/Microsoft/BotFramework-DirectLineJS#readme",
   "devDependencies": {
-    "source-map-loader": "^0.1.5",
-    "ts-loader": "^1.3.3",
-    "typescript": "^2.3.2",
-    "webpack": "^1.14.0"
+    "lerna": "^3.4.0"
   }
 }

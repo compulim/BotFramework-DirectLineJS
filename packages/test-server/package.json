@@ -1,0 +1,29 @@
+{
+  "name": "test-server",
+  "version": "0.0.0-0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel --ignore **/*.spec.js,**/*.test.js,__test__/**/*.js --out-dir lib --source-maps inline --verbose src",
+    "test": "jest",
+    "watch": "npm run build -- --watch"
+  },
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "restify": "^7.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "get-port": "^4.0.0",
+    "jest": "^23.6.0",
+    "node-fetch": "^2.2.0"
+  }
+}
