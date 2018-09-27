@@ -1,12 +1,14 @@
 import createServer from '../../test-server/lib';
 import { ConnectionStatus, DirectLine } from '../src/directLine';
 
+const conversationId = Math.random();
+
 test('Create conversation should set conversation ID', async () => {
   const { dispose, port, promises } = await createServer({
     playbacks: [{
       req: { method: 'POST', url: '/v3/directline/conversations' },
       res: { body: {
-        conversationId: '1234'
+        conversationId: conversationId
       } }
     }]
   });
@@ -26,7 +28,7 @@ test('Create conversation should set conversation ID', async () => {
       })
     ]);
 
-    expect(directLine).toHaveProperty('conversationId', '1234');
+    expect(directLine).toHaveProperty('conversationId', conversationId);
 
     subscription.unsubscribe();
   } finally {
