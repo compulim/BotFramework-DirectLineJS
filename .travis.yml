@@ -18,3 +18,5 @@ before_script:
 
 before_deploy:
   - npm run prepublishOnly
+  - git config --local user.name "Bot Framework"
+  - git config --local user.email "botframework@microsoft.com"
