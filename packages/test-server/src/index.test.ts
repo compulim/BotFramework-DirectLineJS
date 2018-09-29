@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/@types/jest/index.d.ts" />
+
 import fetch from 'node-fetch';
 
 import createServer from './index';

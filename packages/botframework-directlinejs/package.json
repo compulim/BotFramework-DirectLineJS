@@ -41,6 +41,8 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/runtime": "^7.0.0",
+    "@types/get-port": "^4.0.0",
+    "@types/restify": "^7.2.5",
     "rxjs": "^5.0.3"
   },
   "devDependencies": {
@@ -50,7 +52,10 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/get-port": "^4.0.0",
+    "@types/jest": "^23.3.2",
     "@types/node": "^10.11.0",
+    "@types/restify": "^7.2.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "concurrently": "^4.0.1",

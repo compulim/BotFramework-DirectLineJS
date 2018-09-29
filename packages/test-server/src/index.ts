@@ -1,10 +1,35 @@
-import getPort from 'get-port';
-import restify from 'restify';
+/// <reference path="get-port.d.ts" />
 
-export default async function ({ playbacks }) {
+import getPort from 'get-port';
+import { createServer } from 'restify';
+
+export type Playback = {
+  req: {
+    method?: string;
+    url?: string;
+  };
+  res: {
+    body?: any;
+    code?: number;
+    headers?: any;
+  };
+};
+
+export type CreateServerOptions = {
+  playbacks: Playback[];
+};
+
+export type CreateServerResult = {
+  dispose: () => Promise<void>;
+  port: number;
+  promises: Promise<void>[];
+};
+
+export default async function (options: CreateServerOptions): Promise<CreateServerResult> {
+  const { playbacks } = options;
   const port = await getPort({ port: 5000 });
-  const promises = [];
-  const server = restify.createServer();
+  const promises: Promise<void>[] = [];
+  const server = createServer();
 
   playbacks.forEach(({ req: preq = {}, res: pres = {} }, index) => {
     let played = false;
@@ -17,7 +42,7 @@ export default async function ({ playbacks }) {
         ) {
           if (req.method === 'OPTIONS') {
             res.send(200, '', {
-              'Access-Control-Allow-Origin': req.header('Origin'),
+              'Access-Control-Allow-Origin': req.header('Origin') || '*',
               'Access-Control-Allow-Methods': req.header('Access-Control-Request-Method') || 'GET',
               'Access-Control-Allow-Headers': req.header('Access-Control-Request-Headers') || '',
               'Content-Type': 'text/html; charset=utf-8'
@@ -42,7 +67,7 @@ export default async function ({ playbacks }) {
 
   return {
     dispose: () => {
-      server.close();
+      return new Promise(resolve => server.close(resolve));
     },
     port,
     promises

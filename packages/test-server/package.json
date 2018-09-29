@@ -4,12 +4,28 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel --ignore **/*.spec.js,**/*.test.js,__test__/**/*.js --out-dir lib --source-maps inline --verbose src",
+    "build": "concurrently --names \"babel,typecheck\" \"npm run build:babel\" \"npm run build:typecheck\"",
+    "build:babel": "babel --extensions .js,.ts --ignore **/*.spec.js,**/*.spec.ts,**/*.test.js,**/*.test.ts,__test__/**/*.js,__test__/**/*.ts,**/*.d.ts --out-dir lib --source-maps inline --verbose src",
+    "build:typecheck": "tsc",
+    "clean": "npx rimraf lib",
     "test": "jest",
-    "watch": "npm run build -- --watch"
+    "watch": "concurrently --names \"babel,typecheck\" \"npm run build:babel -- --watch\" \"npm run build:typecheck -- --preserveWatchOutput --watch\""
   },
   "author": "Microsoft Corporation",
   "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s",
+      "**/?(*.)(spec|test).[jt]s"
+    ],
+    "transform": {
+      "^.+\\.[jt]s$": "babel-jest"
+    }
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "restify": "^7.2.1"
@@ -20,10 +36,15 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.2",
+    "@types/restify": "^7.2.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "concurrently": "^4.0.1",
     "get-port": "^4.0.0",
     "jest": "^23.6.0",
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.2.0",
+    "typescript": "^3.1.1"
   }
 }

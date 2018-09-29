@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/@types/jest/index.d.ts" />
+
 import createServer from '../../test-server/lib';
 import { ConnectionStatus, DirectLine } from '../src/directLine';
 
@@ -32,6 +34,6 @@ test('Create conversation should set conversation ID', async () => {
 
     subscription.unsubscribe();
   } finally {
-    dispose();
+    await dispose();
   }
 });

@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/@types/jest/index.d.ts" />
+
 import { AjaxResponse, AjaxRequest } from 'rxjs/observable/dom/AjaxObservable';
 import { ConnectionStatus, DirectLine } from '../src/directLine';
 import { Observable } from 'rxjs/Observable';
