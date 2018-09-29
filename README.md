@@ -1,6 +1,6 @@
 # BotFramework-DirectLineJS
 
-[![Build Status](https://travis-ci.org/Microsoft/BotFramework-DirectLineJS.svg?branch=master)](https://travis-ci.org/Microsoft/BotFramework-DirectLineJS)
+[![Build Status](https://travis-ci.org/compulim/BotFramework-DirectLineJS.svg?branch=master)](https://travis-ci.org/compulim/BotFramework-DirectLineJS)
 
 Client library for the [Microsoft Bot Framework](http://www.botframework.com) *[Direct Line](https://docs.botframework.com/en-us/restapi/directline3/)* protocol.
 
