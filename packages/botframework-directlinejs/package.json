@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git://git@github.com/Microsoft/BotFramework-DirectLineJS.git"
   },
-  "author": "Microsoft Corp",
+  "author": "Microsoft Corporation",
   "license": "MIT",
   "jest": {
     "moduleFileExtensions": [
