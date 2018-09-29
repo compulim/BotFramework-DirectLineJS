@@ -2,7 +2,7 @@
 
 import fetch from 'node-fetch';
 
-import createServer from './index';
+import createServer from './createServer';
 
 test('GET /health.txt should return 200 OK', async () => {
   const { dispose, port } = await createServer({

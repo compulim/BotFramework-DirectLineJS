@@ -1,5 +1,5 @@
 {
-  "name": "test-server",
+  "name": "test-facility",
   "version": "0.0.0-0",
   "description": "",
   "main": "lib/index.js",
@@ -13,6 +13,7 @@
   },
   "author": "Microsoft Corporation",
   "license": "MIT",
+  "private": true,
   "jest": {
     "moduleFileExtensions": [
       "js",
