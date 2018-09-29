@@ -32,7 +32,7 @@ it("hello", () => {
 
     const subscription = directLine.activity$.subscribe(() => {});
 
-    expect(directLine).toHaveProperty('conversationId', 100);
+    expect(directLine).toHaveProperty('conversationId', conversationId);
 
     subscription.unsubscribe();
   } finally {
