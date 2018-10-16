@@ -59,7 +59,7 @@
     "concurrently": "^4.0.1",
     "jest": "^23.6.0",
     "node-fetch": "^2.2.0",
-    "test-facility": "^0.0.0-0",
+    "test-harness": "^0.0.0-0",
     "typescript": "^3.0.3",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.1",

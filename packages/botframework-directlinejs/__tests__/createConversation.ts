@@ -1,6 +1,6 @@
 /// <reference path="../node_modules/@types/jest/index.d.ts" />
 
-import { createServer } from 'test-facility';
+import { createServer } from 'test-harness';
 import { ConnectionStatus, DirectLine } from '../src/directLine';
 
 const conversationId = Math.random();

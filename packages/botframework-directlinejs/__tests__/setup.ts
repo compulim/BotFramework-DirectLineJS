@@ -1,6 +1,6 @@
 /// <reference path="../node_modules/@types/jest/index.d.ts" />
 
-import { createServer } from 'test-facility';
+import { createServer } from 'test-harness';
 import fetch from 'node-fetch';
 
 test('Jest setup correctly', () => {
@@ -14,11 +14,10 @@ test('createServer setup correctly', async () => {
     }]
   });
 
-  const res = await fetch(`http://localhost:${ port }/health.txt`);
-
-  expect(res).toHaveProperty('ok', true);
-
   try {
+    const res = await fetch(`http://localhost:${ port }/health.txt`);
+
+    expect(res).toHaveProperty('ok', true);
   } finally {
     dispose();
   }
