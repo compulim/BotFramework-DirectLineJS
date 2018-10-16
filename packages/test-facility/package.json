@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "p-defer": "^1.0.0",
     "restify": "^7.2.1"
   },
   "devDependencies": {
@@ -39,11 +40,13 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
     "@types/jest": "^23.3.2",
+    "@types/p-defer": "^1.0.2",
     "@types/restify": "^7.2.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "concurrently": "^4.0.1",
     "get-port": "^4.0.0",
+    "has-resolved": "^1.1.0",
     "jest": "^23.6.0",
     "node-fetch": "^2.2.0",
     "typescript": "^3.1.1"

@@ -1,7 +1,13 @@
 /// <reference path="get-port.d.ts" />
 
-import getPort from 'get-port';
 import { createServer } from 'restify';
+// import { toUnicode } from 'punycode';
+import createDeferred from 'p-defer';
+import getPort from 'get-port';
+
+export type PlaybackWithDeferred = {
+  deferred: createDeferred.DeferredPromise<{}>;
+} & Playback;
 
 export type Playback = {
   req: {
@@ -16,52 +22,95 @@ export type Playback = {
 };
 
 export type CreateServerOptions = {
-  playbacks: Playback[];
+  playbacks: (Playback | Playback[])[];
 };
 
 export type CreateServerResult = {
   dispose: () => Promise<void>;
   port: number;
-  promises: Promise<void>[];
+  promises: (Promise<{}> | Promise<{}>[])[];
 };
 
+// function fillArray<T>(length: number, filler: () => T): T[] {
+//   return new Array(length).fill(0).map(filler);
+// }
+
 export default async function (options: CreateServerOptions): Promise<CreateServerResult> {
-  const { playbacks } = options;
+  // const orderedPlaybacks = (options.playbacks || []).map(unorderedPlaybacks => Array.isArray(unorderedPlaybacks) ? [...unorderedPlaybacks] : [unorderedPlaybacks]);
   const port = await getPort({ port: 5000 });
-  const promises: Promise<void>[] = [];
   const server = createServer();
 
-  // TOOD: I think we should make the playbacks stricter, at exact order.
-  playbacks.forEach(({ req: preq = {}, res: pres = {} }, index) => {
-    let played = false;
+  const orderedPlaybacks: PlaybackWithDeferred[][] = (options.playbacks || []).map(unorderedPlaybacks => {
+    if (Array.isArray(unorderedPlaybacks)) {
+      return unorderedPlaybacks.map(playback => ({
+        ...playback,
+        deferred: createDeferred()
+      }));
+    } else {
+      return [{
+        ...unorderedPlaybacks,
+        deferred: createDeferred()
+      }];
+    }
+  });
 
-    promises[index] = new Promise(resolve => {
-      server.pre((req, res, next) => {
-        if (
-          !played
-          && req.url === (preq.url || '/')
-        ) {
-          if (req.method === 'OPTIONS') {
-            res.send(200, '', {
-              'Access-Control-Allow-Origin': req.header('Origin') || '*',
-              'Access-Control-Allow-Methods': req.header('Access-Control-Request-Method') || 'GET',
-              'Access-Control-Allow-Headers': req.header('Access-Control-Request-Headers') || '',
-              'Content-Type': 'text/html; charset=utf-8'
-            });
+  server.pre((req, res, next) => {
+    const firstPlayback = orderedPlaybacks[0];
 
-            return;
-          } else if (req.method === (preq.method || 'GET')) {
-            resolve();
-            played = true;
-            res.send(pres.code || 200, pres.body, pres.headers || {});
+    if (!firstPlayback) {
+      return next();
+    }
 
-            return;
+    const unorderedPlaybacks = Array.isArray(firstPlayback) ? firstPlayback : [firstPlayback];
+    let handled;
+
+    unorderedPlaybacks.forEach(({
+      deferred,
+      req: preq = {},
+      res: pres = {}
+    }, index) => {
+      if (req.url === (preq.url || '/')) {
+        if (req.method === 'OPTIONS') {
+          res.send(200, '', {
+            'Access-Control-Allow-Origin': req.header('Origin') || '*',
+            'Access-Control-Allow-Methods': req.header('Access-Control-Request-Method') || 'GET',
+            'Access-Control-Allow-Headers': req.header('Access-Control-Request-Headers') || '',
+            'Content-Type': 'text/html; charset=utf-8'
+          });
+
+          handled = true;
+        } else if (req.method === (preq.method || 'GET')) {
+          const headers: any = {};
+
+          if (typeof pres.body === 'string') {
+            headers['Content-Type'] = 'text/plain';
+          }
+
+          res.send(
+            pres.code || 200,
+            pres.body,
+            {
+              ...headers,
+              ...pres.headers
+            }
+          );
+
+          handled = true;
+          deferred.resolve();
+          unorderedPlaybacks.splice(index, 1);
+
+          if (!unorderedPlaybacks.length) {
+            orderedPlaybacks.shift();
           }
         }
 
-        return next();
-      });
+        return;
+      }
     });
+
+    if (!handled) {
+      return next();
+    }
   });
 
   server.listen(port);
@@ -71,6 +120,12 @@ export default async function (options: CreateServerOptions): Promise<CreateServ
       return new Promise(resolve => server.close(resolve));
     },
     port,
-    promises
+    promises: options.playbacks.map((unorderedPlayback: (Playback | Playback[]), index) => {
+      if (Array.isArray(unorderedPlayback)) {
+        return (orderedPlaybacks[index] as PlaybackWithDeferred[]).map(({ deferred: { promise } }) => promise);
+      } else {
+        return (orderedPlaybacks[index][0]).deferred.promise;
+      }
+    })
   };
 }
