@@ -1,7 +1,6 @@
 /// <reference path="get-port.d.ts" />
 
 import { createServer } from 'restify';
-// import { toUnicode } from 'punycode';
 import createDeferred from 'p-defer';
 import getPort from 'get-port';
 
@@ -31,12 +30,7 @@ export type CreateServerResult = {
   promises: (Promise<{}> | Promise<{}>[])[];
 };
 
-// function fillArray<T>(length: number, filler: () => T): T[] {
-//   return new Array(length).fill(0).map(filler);
-// }
-
 export default async function (options: CreateServerOptions): Promise<CreateServerResult> {
-  // const orderedPlaybacks = (options.playbacks || []).map(unorderedPlaybacks => Array.isArray(unorderedPlaybacks) ? [...unorderedPlaybacks] : [unorderedPlaybacks]);
   const port = await getPort({ port: 5000 });
   const server = createServer();
 
