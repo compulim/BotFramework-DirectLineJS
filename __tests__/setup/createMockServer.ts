@@ -1,5 +1,5 @@
 /// <reference path="get-port.d.ts" />
-/// <reference path="types.d.ts" />
+/// <reference path="global.d.ts" />
 
 import { createServer } from 'restify';
 import createDeferred from 'p-defer';

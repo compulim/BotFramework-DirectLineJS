@@ -1,5 +1,5 @@
 /// <reference path="../node_modules/@types/jest/index.d.ts" />
-/// <reference path="setup/types.d.ts" />
+/// <reference path="setup/global.d.ts" />
 
 import { ConnectionStatus, DirectLine } from '../src/directLine';
 
