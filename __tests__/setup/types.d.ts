@@ -3,7 +3,6 @@ export type Subscription = (() => Promise<any> | any) | ({ unsubscribe: () => Pr
 declare function createMockServer({
   playbacks: []
 }): ({
-  dispose: () => Promise<void>,
   port: number,
   promises: Promise<any>[]
 });

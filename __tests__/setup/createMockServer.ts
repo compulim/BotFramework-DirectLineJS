@@ -1,4 +1,5 @@
 /// <reference path="get-port.d.ts" />
+/// <reference path="types.d.ts" />
 
 import { createServer } from 'restify';
 import createDeferred from 'p-defer';
@@ -25,7 +26,6 @@ export type CreateServerOptions = {
 };
 
 export type CreateServerResult = {
-  dispose: () => Promise<void>;
   port: number;
   promises: (Promise<{}> | Promise<{}>[])[];
 };
@@ -109,10 +109,11 @@ export default async function (options: CreateServerOptions): Promise<CreateServ
 
   server.listen(port);
 
+  subscriptions.push({
+    unsubscribe: () => new Promise(resolve => server.close(resolve))
+  });
+
   return {
-    dispose: () => {
-      return new Promise(resolve => server.close(resolve));
-    },
     port,
     promises: options.playbacks.map((unorderedPlayback: (Playback | Playback[]), index) => {
       if (Array.isArray(unorderedPlayback)) {
