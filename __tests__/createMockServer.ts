@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import createServer from './createServer';
+import createServer from './setup/createMockServer';
 import hasResolved from 'has-resolved';
 
 test('GET /once.txt should return 200 OK', async () => {
