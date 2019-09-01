@@ -1,6 +1,7 @@
 language: node_js
+
 node_js:
-- "10"
+- "12"
 
 before_install:
 - npm ci
@@ -9,24 +10,19 @@ before_install:
 install:
 - npm run prepublishOnly
 
+before_deploy:
+- git config --local user.name "William Wong"
+- git config --local user.email "compulim@hotmail.com"
+- git tag dev
+
 deploy:
-- provider: npm
-  api_key: $NPM_TOKEN
-  email: "botframework@microsoft.com"
-  on:
-    branch: master
-  skip_cleanup: true
-  tag: master
-
-- provider: npm
-  api_key: $NPM_TOKEN
-  email: "botframework@microsoft.com"
-  on:
-    tags: true
-  skip_cleanup: true
-
 - provider: releases
   api_key: $GITHUB_TOKEN
+  file:
+  - directLine.js
+  # file_glob: true
   on:
-    tags: true
+    branch: streamingextension
+  overwrite: true
+  prerelease: true
   skip_cleanup: true

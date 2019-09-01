@@ -413,7 +413,7 @@ class StreamHandler implements BFSE.RequestHandler {
             return r;
         }
 
-        var attachments = []
+        var attachments = [...activitySet.activities[0].attachments || []];
         let stream: BFSE.ContentStream;
         while (stream = request.streams.shift()) {
             let atch = await stream.readAsString();
@@ -918,6 +918,12 @@ export class DirectLine implements IBotConnection {
                 subscriber.error(e)
             });
         }).flatMap(activityGroup => this.observableFromActivityGroup(activityGroup)).share();
+
+        // obs1$.subscribe({
+        //     next(activity) {
+        //         console.log(activity);
+        //     }
+        // });
 
         return this.fallback$(obs1$, () => this.streamingWebSocket, this.webSocketActivity$());
     }
