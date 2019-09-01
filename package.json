@@ -45,7 +45,7 @@
     "@types/p-defer": "^1.0.3",
     "babel-jest": "^24.0.0",
     "babel-plugin-istanbul": "^5.1.0",
-    "botframework-streaming-extensions": "^4.6.0-preview.76590",
+    "botframework-streaming-extensions": "file:external/botframework-streaming-extensions-0.0.1.tgz",
     "concurrently": "^4.1.0",
     "get-port": "^4.1.0",
     "has-resolved": "^1.1.0",
