@@ -24,7 +24,7 @@ deploy:
   - botframework-directlinejs-*.tgz
   file_glob: true
   on:
-    branch: streamingextension
+    branch: streamingextensions
   overwrite: true
   prerelease: true
   skip_cleanup: true
