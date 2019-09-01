@@ -11,6 +11,7 @@ install:
 - npm run prepublishOnly
 
 before_deploy:
+- npm pack
 - git config --local user.name "William Wong"
 - git config --local user.email "compulim@hotmail.com"
 - git tag dev
@@ -20,7 +21,8 @@ deploy:
   api_key: $GITHUB_TOKEN
   file:
   - directLine.js
-  # file_glob: true
+  - botframework-directlinejs-*.tgz
+  file_glob: true
   on:
     branch: streamingextension
   overwrite: true
