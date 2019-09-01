@@ -14,7 +14,8 @@ before_deploy:
 - npm pack
 - git config --local user.name "William Wong"
 - git config --local user.email "compulim@hotmail.com"
-- git tag dev
+- export TRAVIS_TAG=dev
+- git tag $TRAVIS_TAG
 
 deploy:
 - provider: releases
