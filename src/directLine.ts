@@ -767,7 +767,7 @@ export class DirectLine implements IBotConnection {
                         }))
                         .count()
                     .flatMap(_ => {
-                        let url = `${this.domain}/conversations/${this.conversationId}/users/${messageWithoutAttachments.from.id}/upload`;
+                        let url = `/v3/directline/conversations/${this.conversationId}/users/${messageWithoutAttachments.from.id}/upload`;
                         let request = BFSE.StreamingRequest.create('PUT', url);
                         request.setBody(JSON.stringify(messageWithoutAttachments));
                         httpContentList.forEach(e => request.addStream(e));
