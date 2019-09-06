@@ -27,7 +27,7 @@ describe('Happy path', () => {
   afterEach(() => unsubscribes.forEach(fn => onErrorResumeNext(fn)));
 
   describe('REST', () => {
-    test('should connect and echo from bot', async () => {
+    test('should connect, send messaage, and receive echo from bot', async () => {
       const directLine = new DirectLine({
         secret: DIRECT_LINE_SECRET,
         webSocket: false
